@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DPP 환경 점수</title>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: "Pretendard", sans-serif;
+    }
+
+    body{
+      min-height:100vh;
+      background:#f3f5f7;
+
+      display:flex;
+      justify-content:center;
+      align-items:center;
+
+      padding:30px;
+    }
+
+    .card{
+
+      width:360px;
+
+      background:white;
+
+      border-radius:28px;
+
+      padding:28px;
+
+      box-shadow:
+      0 10px 30px rgba(0,0,0,0.08);
+
+      position:relative;
+
+      overflow:hidden;
+    }
+
+    .top-line{
+      width:80px;
+      height:8px;
+
+      background:#4CAF50;
+
+      border-radius:999px;
+
+      margin:0 auto 25px;
+    }
+
+    /* ===== 게이지 ===== */
+
+    .gauge-wrap{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+
+      margin-bottom:20px;
+    }
+
+    .gauge{
+
+      --score: 2.5;
+      --deg: calc(var(--score) * 3.6deg);
+
+      width:220px;
+      height:220px;
+
+      border-radius:50%;
+
+      background:
+      conic-gradient(
+      #43a047 0deg var(--deg),
+      #e5e7eb var(--deg) 360deg
+      );
+
+      display:flex;
+      justify-content:center;
+      align-items:center;
+
+      position:relative;
+
+      transition:0.5s;
+    }
+
+    .gauge::before{
+
+      content:"";
+
+      position:absolute;
+
+      width:170px;
+      height:170px;
+
+      background:white;
+
+      border-radius:50%;
+
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    .score-box{
+      position:relative;
+
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+    }
+
+    .score{
+      font-size:70px;
+      font-weight:800;
+      color:#43a047;
+      line-height:1;
+    }
+
+    .score-text{
+      margin-top:5px;
+      font-size:14px;
+      color:#777;
+    }
+
+    /* ===== 제품명 ===== */
+
+    .product-title{
+
+      margin-top:25px;
+
+      text-align:center;
+
+      font-size:30px;
+      font-weight:800;
+
+      color:#222;
+    }
+
+    .grade{
+
+      width:max-content;
+
+      margin:12px auto 0;
+
+      background:#e8f5e9;
+
+      color:#2e7d32;
+
+      padding:7px 16px;
+
+      border-radius:999px;
+
+      font-weight:700;
+    }
+
+    /* ===== 설명 ===== */
+
+    .desc-box{
+
+      margin-top:28px;
+
+      border:2px solid #ececec;
+
+      border-radius:18px;
+
+      padding:18px;
+
+      line-height:1.7;
+
+      color:#444;
+
+      font-size:15px;
+    }
+
+    /* ===== 환경 요소 ===== */
+
+    .section-title{
+      margin-top:28px;
+      margin-bottom:15px;
+
+      font-size:18px;
+      font-weight:800;
+      color:#222;
+    }
+
+    .env-grid{
+
+      display:grid;
+
+      grid-template-columns:1fr 1fr;
+
+      gap:14px;
+    }
+
+    .env-item{
+
+      background:#eef8ef;
+
+      border-radius:16px;
+
+      padding:18px;
+
+      transition:0.2s;
+    }
+
+    .env-item:hover{
+      transform:translateY(-3px);
+    }
+
+    .env-name{
+
+      font-size:14px;
+
+      color:#666;
+
+      margin-bottom:8px;
+    }
+
+    .env-value{
+
+      font-size:26px;
+
+      font-weight:800;
+
+      color:#2e7d32;
+    }
+
+    /* ===== 버튼 ===== */
+
+    .btn{
+
+      width:100%;
+
+      margin-top:28px;
+
+      padding:15px;
+
+      border:none;
+
+      border-radius:16px;
+
+      background:#43a047;
+
+      color:white;
+
+      font-size:16px;
+      font-weight:700;
+
+      cursor:pointer;
+
+      transition:0.25s;
+    }
+
+    .btn:hover{
+      background:#388e3c;
+      transform:translateY(-2px);
+    }
+
+    /* ===== 반응형 ===== */
+
+    @media(max-width:480px){
+
+      .card{
+        width:100%;
+      }
+
+      .gauge{
+        width:190px;
+        height:190px;
+      }
+
+      .gauge::before{
+        width:145px;
+        height:145px;
+      }
+
+      .score{
+        font-size:55px;
+      }
+
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <div class="card">
+
+    <!-- 점수 -->
+    <div class="gauge-wrap">
+
+      <div class="gauge">   
+
+        <div class="score-box">
+          <div class="score">2.5</div>
+          <div class="score-text">
+            최종 환경 점수
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- 제품명 -->
+    <div class="product-title">
+      펜피아 3000 하드커버 스프링노트 16절
+    </div>
+
+    <!-- 설명 -->
+    <div class="desc-box">
+      일반 종이와 일반 인쇄 잉크를 사용하여 제작된
+      노트입니다. 필기와 학습에 적합하며, 일반적인 
+      생산 과정을 거쳐 제작되었습니다.
+    </div>
+
+    <!-- 환경 요소 -->
+    <div class="section-title">
+      환경 요소 점수
+    </div>
+
+    <div class="env-grid">
+
+      <div class="env-item">
+        <div class="env-name">탄소 배출</div>
+        <div class="env-value">1.7kg CO₂</div>
+      </div>
+
+      <div class="env-item">
+        <div class="env-name">물 사용량</div>
+        <div class="env-value">65L</div>
+      </div>
+
+      <div class="env-item">
+        <div class="env-name">에너지</div>
+        <div class="env-value">6.5kWh</div>
+      </div>
+
+      <div class="env-item">
+        <div class="env-name">운송 거리</div>
+        <div class="env-value">175km</div>
+      </div>
+
+    </div>
+
+    <!-- 버튼 -->
+    <button class="btn">
+      제품 원본 정보 보기
+    </button>
+
+  </div>
+
+</body>
+</html>
