@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>DPP 환경 점수</title>
+  <title>DPP 환경 점수 - 모닝글로리</title>
 
   <style>
-
     *{
       margin:0;
       padding:0;
@@ -17,97 +16,83 @@
     body{
       min-height:100vh;
       background:#f3f5f7;
-
       display:flex;
       justify-content:center;
       align-items:center;
-
       padding:30px;
     }
 
     .card{
-
       width:360px;
-
       background:white;
-
       border-radius:28px;
-
       padding:28px;
-
-      box-shadow:
-      0 10px 30px rgba(0,0,0,0.08);
-
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
       position:relative;
-
       overflow:hidden;
+    }
+
+    /* ===== 포인트 표시 스타일 추가 ===== */
+    .point-box {
+      background: #f1f8e9;
+      border: 1px solid #c5e1a5;
+      padding: 12px;
+      border-radius: 16px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 15px;
+      color: #33691e;
+    }
+    .point-box strong {
+      font-size: 18px;
+      font-weight: 800;
+      color: #2e7d32;
     }
 
     .top-line{
       width:80px;
       height:8px;
-
       background:#4CAF50;
-
       border-radius:999px;
-
       margin:0 auto 25px;
     }
 
     /* ===== 게이지 ===== */
-
     .gauge-wrap{
       display:flex;
       justify-content:center;
       align-items:center;
-
       margin-bottom:20px;
     }
 
     .gauge{
-
       --score: 97.5;
       --deg: calc(var(--score) * 3.6deg);
-
       width:220px;
       height:220px;
-
       border-radius:50%;
-
-      background:
-      conic-gradient(
-      #43a047 0deg var(--deg),
-      #e5e7eb var(--deg) 360deg
-      );
-
+      background: conic-gradient( #43a047 0deg var(--deg), #e5e7eb var(--deg) 360deg );
       display:flex;
       justify-content:center;
       align-items:center;
-
       position:relative;
-
       transition:0.5s;
     }
 
     .gauge::before{
-
       content:"";
-
       position:absolute;
-
       width:170px;
       height:170px;
-
       background:white;
-
       border-radius:50%;
-
       box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
     }
 
     .score-box{
       position:relative;
-
       display:flex;
       flex-direction:column;
       align-items:center;
@@ -128,83 +113,44 @@
     }
 
     /* ===== 제품명 ===== */
-
     .product-title{
-
       margin-top:25px;
-
       text-align:center;
-
       font-size:30px;
       font-weight:800;
-
       color:#222;
     }
 
-    .grade{
-
-      width:max-content;
-
-      margin:12px auto 0;
-
-      background:#e8f5e9;
-
-      color:#2e7d32;
-
-      padding:7px 16px;
-
-      border-radius:999px;
-
-      font-weight:700;
-    }
-
     /* ===== 설명 ===== */
-
     .desc-box{
-
       margin-top:28px;
-
       border:2px solid #ececec;
-
       border-radius:18px;
-
       padding:18px;
-
       line-height:1.7;
-
       color:#444;
-
       font-size:15px;
     }
 
     /* ===== 환경 요소 ===== */
-
     .section-title{
       margin-top:28px;
       margin-bottom:15px;
-
       font-size:18px;
       font-weight:800;
       color:#222;
     }
 
     .env-grid{
-
       display:grid;
-
       grid-template-columns:1fr 1fr;
-
       gap:14px;
     }
 
     .env-item{
-
       background:#eef8ef;
-
       border-radius:16px;
-
       padding:18px;
-
       transition:0.2s;
     }
 
@@ -213,46 +159,29 @@
     }
 
     .env-name{
-
       font-size:14px;
-
       color:#666;
-
       margin-bottom:8px;
     }
 
     .env-value{
-
       font-size:26px;
-
       font-weight:800;
-
       color:#2e7d32;
     }
 
     /* ===== 버튼 ===== */
-
     .btn{
-
       width:100%;
-
       margin-top:28px;
-
       padding:15px;
-
       border:none;
-
       border-radius:16px;
-
       background:#43a047;
-
       color:white;
-
       font-size:16px;
       font-weight:700;
-
       cursor:pointer;
-
       transition:0.25s;
     }
 
@@ -262,50 +191,31 @@
     }
 
     /* ===== 반응형 ===== */
-
     @media(max-width:480px){
-
-      .card{
-        width:100%;
-      }
-
-      .gauge{
-        width:190px;
-        height:190px;
-      }
-
-      .gauge::before{
-        width:145px;
-        height:145px;
-      }
-
-      .score{
-        font-size:55px;
-      }
-
+      .card{ width:100%; }
+      .gauge{ width:190px; height:190px; }
+      .gauge::before{ width:145px; height:145px; }
+      .score{ font-size:55px; }
     }
-
   </style>
 </head>
-
 <body>
 
   <div class="card">
+    <!-- 누적 포인트 UI 추가 -->
+    <div class="point-box">
+      <span>내 누적 친환경 포인트</span>
+      <div><strong id="user-points">0</strong> P</div>
+    </div>
 
     <!-- 점수 -->
     <div class="gauge-wrap">
-
       <div class="gauge">   
-
         <div class="score-box">
           <div class="score">97.5</div>
-          <div class="score-text">
-            최종 환경 점수
-          </div>
+          <div class="score-text">최종 환경 점수</div>
         </div>
-
       </div>
-
     </div>
 
     <!-- 제품명 -->
@@ -321,40 +231,46 @@
     </div>
 
     <!-- 환경 요소 -->
-    <div class="section-title">
-      환경 요소 점수
-    </div>
-
+    <div class="section-title">환경 요소 점수</div>
     <div class="env-grid">
-
       <div class="env-item">
         <div class="env-name">탄소 배출</div>
         <div class="env-value">1kg CO₂</div>
       </div>
-
       <div class="env-item">
         <div class="env-name">물 사용량</div>
         <div class="env-value">30L</div>
       </div>
-
       <div class="env-item">
         <div class="env-name">에너지</div>
         <div class="env-value">4kWh</div>
       </div>
-
       <div class="env-item">
         <div class="env-name">운송 거리</div>
         <div class="env-value">175km</div>
       </div>
-
     </div>
 
     <!-- 버튼 -->
-    <button class="btn">
-      제품 원본 정보 보기
-    </button>
-
+    <button class="btn">제품 원본 정보 보기</button>
   </div>
+
+  <!-- 자바스크립트 연동 코드 -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // 1. 기존 포인트 가져오기 (없으면 0)
+      let currentPoints = parseInt(localStorage.getItem("dpp_shared_points")) || 0;
+      
+      // 2. 방문할 때마다 10점 추가
+      currentPoints += 10;
+      
+      // 3. 변경된 포인트 저장하기
+      localStorage.setItem("dpp_shared_points", currentPoints);
+      
+      // 4. 화면에 반영하기
+      document.getElementById("user-points").innerText = currentPoints.toLocaleString();
+    });
+  </script>
 
 </body>
 </html>
